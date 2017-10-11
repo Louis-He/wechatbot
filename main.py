@@ -31,6 +31,7 @@ def getData(org,lon,lat):
     return data
 
 def analyze(source, JSON):
+    n = 0
     T = []
     HI = []
     LOW = []
@@ -53,28 +54,38 @@ def analyze(source, JSON):
         HI.append(daymax)
         LOW.append(daymin)
         DATE.append(i)
+        seq.append(n)
+        n += 1
         #print(i + '\tHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C')
         #result += (i + '\nHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C\n')
 
     #根据日期顺序进行排序
     min = 99999999
+    lastpos = 0
     pos = 0
     n = 0
-    for i in range (0,len(T)):
-        for i in range (0, len(T)):
+    for i in range(0,len(T)):
+        for i in range(n, len(T)):
             if T[i] < min:
                 min = T[i]
                 pos = i
         print('pos'+str(pos))
-        seq.append(pos + n)
+
+        temp = seq[n]
+        seq[n] = seq[pos]
+        seq[pos] = temp
+
+        temp = T[n]
+        T[n] = T[pos]
+        T[pos] = temp
+
         print(T)
-        del T[pos]
         min = 99999999
         n += 1
     print (seq)
 
     for i in range(0, len(DATE)):
-        result += (DATE[i] + '\nHI:' + str(round(HI[i] - 273.15, 1)) + '°C, LOW:' + str(round(LOW[i] - 273.15, 1)) + '°C\n')
+        result += (DATE[seq[i]] + '\nHI:' + str(round(HI[seq[i]] - 273.15, 1)) + '°C, LOW:' + str(round(LOW[seq[i]] - 273.15, 1)) + '°C\n')
 
     return result
 
