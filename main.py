@@ -105,10 +105,13 @@ def turingreply(msg):
 
 
 #initialize
+print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人准备登陆')
 bot = Bot(console_qr = 2)#log in (need scan QRcode)
 
-SG = bot.groups().search('ce男神日常恩爱群')[0]
-my_friend = bot.friends().search('黄麟珂')[0]
+print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人登陆成功')
+myself = bot.self
+#SG = bot.groups().search('ce男神日常恩爱群')[0]
+#my_friend = bot.friends().search('黄麟珂')[0]
 # 打印来自其他好友、群聊和公众号的消息
 @bot.register()
 def print_others(msg):
@@ -122,14 +125,21 @@ def print_others(msg):
     elif msg.text[0:2] == '叮咚':
         try:
             usr = str(msg.sender.remark_name)
+            print('检测到用户：' + usr)
         except:
+            myself.send('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + '[ERR199:未知错误]程序调用出现错误，请检查！')
+            usr = str(msg.member.display_name)
             print('[ERR100:内部错误]不属于单个用户的信息')
+            print('检测到用户：' + usr)
         message = msg.text[2:len(msg.text)]
 
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复开启')
-            return turingreply(message) + '[auto-reply]'
+            reply = turingreply(message)
+            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复：' + reply)
+            return reply + '[auto-reply]'
         except:
+            myself.send('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']'+'[ERR199:未知错误]程序调用出现错误，请检查！')
             return '[ERR199:未知错误]抱歉，出现了未知错误'
 
 '''
