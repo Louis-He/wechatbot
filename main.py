@@ -41,6 +41,7 @@ def analyze(source, JSON):
     daily = JSON['summary']
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']获取天气数据')
     for i in daily:
+        print(i)
         n += 1
         daymax = daily[i]['tempMax']
         daymin = daily[i]['tempMin']
