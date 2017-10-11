@@ -57,7 +57,7 @@ def getweather():
     return result
 
 #initialize
-bot = Bot(console_qr=2)#log in (need scan QRcode)
+bot = Bot(console_qr = 1)#log in (need scan QRcode)
 
 SG = bot.groups().search('ce男神日常恩爱群')[0]
 my_friend = bot.friends().search('黄麟珂')[0]
