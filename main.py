@@ -127,9 +127,8 @@ def print_others(msg):
             usr = str(msg.sender.remark_name)
             print('检测到用户：' + usr)
         except:
-            myself.send('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + '[ERR199:未知错误]程序调用出现错误，请检查！')
-            usr = str(msg.member.display_name)
-            print('[ERR100:内部错误]不属于单个用户的信息')
+            usr = str(msg.member.name)
+            print('[WARNING]不属于单个用户的信息')
             print('检测到用户：' + usr)
         message = msg.text[2:len(msg.text)]
 
