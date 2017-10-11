@@ -94,11 +94,11 @@ def getweather():
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']发送天气信息完成')
     return result
 
-def turingreply(msg):
+def turingreply(msg,usr):
     data = {'key': '1f87c3c9cf3b4867b412267f8c7c1d30',
             'info': msg,
             'loc': '',
-            'userid': 'python'}
+            'userid': usr}
     r = requests.post(url='http://www.tuling123.com/openapi/api', data = data)
     result = json.loads(r.text)
     return result['text']
@@ -128,13 +128,12 @@ def print_others(msg):
             print('检测到用户：' + usr)
         except:
             usr = str(msg.member.name)
-            print('[WARNING]不属于单个用户的信息')
-            print('检测到用户：' + usr)
+            print('[WARNING]属于群聊的信息' + '，检测到用户：' + usr)
         message = msg.text[2:len(msg.text)]
 
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复开启')
-            reply = turingreply(message)
+            reply = turingreply(message,usr)
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复：' + reply)
             return reply + '[auto-reply]'
         except:
