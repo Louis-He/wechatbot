@@ -118,6 +118,7 @@ myself = bot.self
 #SG = bot.groups().search('ce男神日常恩爱群')[0]
 #my_friend = bot.friends().search('黄麟珂')[0]
 # 打印来自其他好友、群聊和公众号的消息
+
 @bot.register()
 def print_others(msg):
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
@@ -129,7 +130,7 @@ def print_others(msg):
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
     elif msg.text[0:4] == '叮咚求导':
         try:
-            result = msgdiff(msg[4:len(msg)])
+            result = msgdiff(msg.text[4:len(msg.text)])
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']求导完成：' + result)
             return result
         except:
