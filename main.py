@@ -69,6 +69,7 @@ def analyze(source, JSON):
         seq.append(pos + n)
         print(T)
         del T[pos]
+        min = 99999999
         n += 1
     print (seq)
 
