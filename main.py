@@ -97,7 +97,6 @@ def getweather():
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']发送天气信息完成')
     return result
 
-'''
 #initialize
 bot = Bot(console_qr = 2)#log in (need scan QRcode)
 
@@ -141,5 +140,3 @@ def weather_reply(msg):
             return '抱歉，调取最新天气失败'
 
 embed()
-'''
-print (getweather())
