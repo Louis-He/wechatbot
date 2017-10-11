@@ -69,7 +69,6 @@ def analyze(source, JSON):
             if T[i] < min:
                 min = T[i]
                 pos = i
-        print('pos'+str(pos))
 
         temp = seq[n]
         seq[n] = seq[pos]
@@ -79,10 +78,8 @@ def analyze(source, JSON):
         T[n] = T[pos]
         T[pos] = temp
 
-        print(T)
         min = 99999999
         n += 1
-    print (seq)
 
     for i in range(0, len(DATE)):
         result += (DATE[seq[i]] + '\nHI:' + str(round(HI[seq[i]] - 273.15, 1)) + '°C, LOW:' + str(round(LOW[seq[i]] - 273.15, 1)) + '°C\n')
@@ -111,7 +108,13 @@ def print_others(msg):
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
             return getweather()
         except:
-            return '抱歉，调取最新天气失败'
+            return '[ERR100:内部错误]抱歉，调取最新天气失败'
+    elif msg.text[0,2]== '叮咚':
+        try:
+            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备自动回复')
+            return 'TEST PASS：成功调取自动回复'
+        except:
+            return '[ERR199:未知错误]抱歉，出现了未知错误'
 
 
 @bot.register(SG, TEXT)
@@ -127,8 +130,9 @@ def auto_reply(msg):
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
             return getweather()
         except:
-            return '抱歉，调取最新天气失败'
+            return '[ERR100:内部错误]抱歉，调取最新天气失败'
 
+'''
 @bot.register(my_friend, TEXT)
 def weather_reply(msg):
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
@@ -137,6 +141,6 @@ def weather_reply(msg):
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
             return getweather()
         except:
-            return '抱歉，调取最新天气失败'
-
+            return '[ERR100:内部错误]抱歉，调取最新天气失败'
+'''
 embed()
