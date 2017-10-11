@@ -64,7 +64,7 @@ my_friend = bot.friends().search('黄麟珂')[0]
 # 打印来自其他好友、群聊和公众号的消息
 @bot.register()
 def print_others(msg):
-    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + msg)
+    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
     if msg.text == '天气' or msg.text == '气温' or msg.text == '气象':
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
@@ -75,7 +75,7 @@ def print_others(msg):
 
 @bot.register(SG, TEXT)
 def auto_reply(msg):
-    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + msg)
+    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
     if msg.text=='test':
         # 回复消息内容和类型
         # return '收到消息: {} ({})'.format(msg.text, msg.type)
@@ -90,7 +90,7 @@ def auto_reply(msg):
 
 @bot.register(my_friend, TEXT)
 def weather_reply(msg):
-    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + msg.text)
+    print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
     if msg.text == '天气' or msg.text == '气温' or msg.text == '气象':
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
