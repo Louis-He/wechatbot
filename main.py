@@ -171,7 +171,7 @@ myself = bot.self
 #my_friend = bot.friends().search(' ')[0]
 # 打印来自其他好友、群聊和公众号的消息
 
-@bot.register()
+@bot.register(except_self = False)
 def print_others(msg):
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
     if msg.text == '天气' or msg.text == '气温' or msg.text == '气象':
