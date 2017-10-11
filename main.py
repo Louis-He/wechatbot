@@ -45,8 +45,7 @@ def analyze(source, JSON):
         daymax = daily[i]['tempMax']
         daymin = daily[i]['tempMin']
         #print(i + '\tHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C')
-        if n <= 3:
-            result += (i + '\nHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C\n')
+        result += (i + '\nHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C\n')
     return result
 
 def getweather():
