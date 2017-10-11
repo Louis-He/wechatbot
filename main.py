@@ -4,6 +4,7 @@ import urllib.request
 import numpy as np
 import time
 import datetime
+import requests
 
 def getData(org,lon,lat):
     if org == 'GFS':
@@ -86,13 +87,22 @@ def analyze(source, JSON):
 
     return result
 
-
 def getweather():
     source = 'EC'
     iodata = getData(source, -79.399, 43.663)
     result = analyze(source, iodata)
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']发送天气信息完成')
     return result
+
+def turingreply(msg):
+    data = {'key': '1f87c3c9cf3b4867b412267f8c7c1d30',
+            'info': msg,
+            'loc': '',
+            'userid': 'python'}
+    r = requests.post(url='http://www.tuling123.com/openapi/api', data = data)
+    result = json.loads(r.text)
+    return result['text']
+
 
 #initialize
 bot = Bot(console_qr = 2)#log in (need scan QRcode)
@@ -111,12 +121,18 @@ def print_others(msg):
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
     elif msg.text[0:2] == '叮咚':
         try:
-            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备自动回复')
-            return 'TEST PASS：成功调取自动回复'
+            usr = str(msg.sender.remark_name)
+        except:
+            print('[ERR100:内部错误]不属于单个用户的信息')
+        message = msg.text[2:len(msg.text)]
+
+        try:
+            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复开启')
+            return turingreply(message)
         except:
             return '[ERR199:未知错误]抱歉，出现了未知错误'
 
-
+'''
 @bot.register(SG, TEXT)
 def auto_reply(msg):
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
@@ -131,7 +147,7 @@ def auto_reply(msg):
             return getweather()
         except:
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
-
+'''
 '''
 @bot.register(my_friend, TEXT)
 def weather_reply(msg):
