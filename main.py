@@ -109,7 +109,7 @@ def print_others(msg):
             return getweather()
         except:
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
-    elif msg.text[0,2]== '叮咚':
+    elif msg.text[0:2] == '叮咚':
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备自动回复')
             return 'TEST PASS：成功调取自动回复'
