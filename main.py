@@ -128,7 +128,7 @@ def print_others(msg):
 
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']自动回复开启')
-            return turingreply(message + '[auto-reply]')
+            return turingreply(message) + '[auto-reply]'
         except:
             return '[ERR199:未知错误]抱歉，出现了未知错误'
 
