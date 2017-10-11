@@ -1,4 +1,5 @@
 from wxpy import *
+from sympy import *
 import json
 import urllib.request
 import numpy as np
@@ -103,6 +104,10 @@ def turingreply(msg,usr):
     result = json.loads(r.text)
     return result['text']
 
+def msgdiff(msg):
+    x = Symbol("x")
+    s = msg
+    return(str(diff(s, x)))
 
 #initialize
 print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人准备登陆')
@@ -122,6 +127,13 @@ def print_others(msg):
             return getweather()
         except:
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
+    elif msg.text[0:4] == '叮咚求导':
+        try:
+            result = msgdiff(msg[4:len(msg)])
+            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']求导完成：' + result)
+            return result
+        except:
+            return '[ERR102:用户错误]抱歉，输入公式格式有误'
     elif msg.text[0:2] == '叮咚':
         try:
             usr = str(msg.sender.remark_name)
