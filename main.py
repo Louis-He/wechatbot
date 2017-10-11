@@ -105,9 +105,61 @@ def turingreply(msg,usr):
     return result['text']
 
 def msgdiff(msg):
+    msg = msg.replace('／', '/');
+    msg = msg.replace('？', '?');
+    msg = msg.replace('。', '.');
+    msg = msg.replace('，', ',');
+    msg = msg.replace('；', ';');
     x = Symbol("x")
     s = msg
-    return(str(diff(s, x)))
+    return(str(diff(s, x)) + '\n- 叮咚云计算v1')
+
+def msgrref(msg):
+    msg = msg.replace('／', '/');
+    msg = msg.replace('？', '?');
+    msg = msg.replace('。', '.');
+    msg = msg.replace('，', ',');
+    msg = msg.replace('；',';');
+    msg = msg.replace(' ', '');
+
+    middle = []
+    tmp = []
+    flag = 0
+
+    while msg.find(';') != -1 or flag == 1:
+        tmp = []
+        tempstr = msg[0:msg.find(';')]
+        if msg.find(';') == -1:
+            tempstr = msg[0:len(msg)]
+        while tempstr.find(',') != -1:
+            tmp.append(int(tempstr[0:msg.find(',')]))
+            tempstr = tempstr[tempstr.find(',') + 1:len(tempstr)]
+        tmp.append(int(tempstr[0:len(tempstr)]))
+        middle.append(tmp)
+        msg = msg[msg.find(';') + 1:len(msg)]
+        if flag == 1:
+            flag += 1
+        if msg.find(';') == -1 and flag == 0:
+            flag += 1
+
+    M = Matrix(middle)
+    rref = M.rref()
+    result = ""
+    for i in range(0, M.rows):
+        for j in range(0, M.cols):
+            if j != M.cols - 1:
+                result += str(list(rref[0])[i * M.cols + j]) + ','
+            else:
+                result += str(list(rref[0])[i * M.cols + j])
+        result += '\n'
+    result += 'with leading term on col: '
+    for i in range(0, len(list(rref[1]))):
+        if i != len(list(rref[1])) - 1:
+            result += str(rref[1][i]) + ','
+        else:
+            result += str(rref[1][i]) + '.'
+    result += '\n- 叮咚云计算v1'
+    return result
 
 #initialize
 print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人准备登陆')
@@ -115,8 +167,8 @@ bot = Bot(console_qr = 2)#log in (need scan QRcode)
 
 print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人登陆成功')
 myself = bot.self
-#SG = bot.groups().search('ce男神日常恩爱群')[0]
-#my_friend = bot.friends().search('黄麟珂')[0]
+#SG = bot.groups().search(' ')[0]
+#my_friend = bot.friends().search(' ')[0]
 # 打印来自其他好友、群聊和公众号的消息
 
 @bot.register()
@@ -134,7 +186,14 @@ def print_others(msg):
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']求导完成：' + result)
             return result
         except:
-            return '[ERR102:用户错误]抱歉，输入公式格式有误'
+            return '[ERR102:用户错误]抱歉，输入公式格式有误，语法例如:叮咚求导2*x^2'
+    elif msg.text[0:6] == '叮咚RREF' or msg.text[0:6] == '叮咚rref':
+        try:
+            result = msgrref(msg.text[6:len(msg.text)])
+            print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']RREF计算完成：' + result)
+            return result
+        except:
+            return '[ERR102:用户错误]抱歉，输入格式有误,语法例如:叮咚rref1,2;3,4'
     elif msg.text[0:2] == '叮咚':
         try:
             usr = str(msg.sender.remark_name)
@@ -181,3 +240,4 @@ def weather_reply(msg):
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
 '''
 embed()
+#print(msgrref('1,0,1,3;2,3,4,7;-1,-3,-3,-4'))
