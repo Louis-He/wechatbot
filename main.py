@@ -31,8 +31,12 @@ def getData(org,lon,lat):
     return data
 
 def analyze(source, JSON):
-    n = 0
+    T = []
+    HI = []
+    LOW = []
+    DATE = []
 
+    seq = []
     result = "来自" + source + "模型的Toronto City天气预报：\n"
     #print(JSON)
     #'NOAA-GFS' OR 'ECMWF-HRES'
@@ -41,13 +45,38 @@ def analyze(source, JSON):
     daily = JSON['summary']
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']获取天气数据')
     for i in daily:
-        print(i)
-        n += 1
+        t = daily[i]['timestamp']
         daymax = daily[i]['tempMax']
         daymin = daily[i]['tempMin']
+
+        T.append(t/100000.0)
+        HI.append(daymax)
+        LOW.append(daymin)
+        DATE.append(i)
         #print(i + '\tHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C')
-        result += (i + '\nHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C\n')
+        #result += (i + '\nHI:' + str(round(daymax - 273.15, 1)) + '°C, LOW:' + str(round(daymin - 273.15, 1)) + '°C\n')
+
+    #根据日期顺序进行排序
+    min = 99999999
+    pos = 0
+    n = 0
+    for i in range (0,len(T)):
+        for i in range (0, len(T)):
+            if T[i] < min:
+                min = T[i]
+                pos = i
+        print('pos'+str(pos))
+        seq.append(pos + n)
+        print(T)
+        del T[pos]
+        n += 1
+    print (seq)
+
+    for i in range(0, len(DATE)):
+        result += (DATE[i] + '\nHI:' + str(round(HI[i] - 273.15, 1)) + '°C, LOW:' + str(round(LOW[i] - 273.15, 1)) + '°C\n')
+
     return result
+
 
 def getweather():
     source = 'EC'
