@@ -169,6 +169,8 @@ def clearlog():
     f = open('/home/weather/hsefz_server/wxbot/record/txtrecord.txt', 'w')
     f.write('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']record重新写入')  # python will convert \n to os.linesep
     f.close()  # you can omit in most cases as the destructor will call it
+    print('[' + time.strftime("%Y-%m-%d %H:%M:%S",
+                                time.localtime()) + ']record重制完成')  # python will convert \n to os.linesep
     return
 scheduler = BackgroundScheduler()
 scheduler.add_job(clearlog, 'interval', seconds = 1)#间隔3秒钟执行一次
