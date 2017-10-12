@@ -6,6 +6,9 @@ import numpy as np
 import time
 import datetime
 import requests
+import sched
+from datetime import datetime
+from apscheduler.schedulers.background import BackgroundScheduler
 
 def getData(org,lon,lat):
     if org == 'GFS':
@@ -160,6 +163,16 @@ def msgrref(msg):
             result += str(rref[1][i]) + '.'
     result += '\n- 叮咚云计算v1'
     return result
+
+def clearlog():
+    #clear logs every hour
+    f = open('~/hsefz_server/wxbot/record/txtrecord.txt', 'w')
+    f.write('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']record重新写入')  # python will convert \n to os.linesep
+    f.close()  # you can omit in most cases as the destructor will call it
+    return
+scheduler = BackgroundScheduler()
+scheduler.add_job(clearlog, 'interval', seconds = 1)#间隔3秒钟执行一次
+scheduler.start()    #这里的调度任务是独立的一个线程
 
 #initialize
 print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']机器人准备登陆')
