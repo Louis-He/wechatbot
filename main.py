@@ -192,7 +192,7 @@ def print_others(msg):
     f = open('/home/weather/hsefz_server/wxbot/record/txtrecord.txt', 'w+')
     f.write('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
     f.close()  # you can omit in most cases as the destructor will call it
-    
+
     if msg.text == '天气' or msg.text == '气温' or msg.text == '气象':
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
