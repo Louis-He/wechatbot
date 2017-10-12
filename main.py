@@ -173,7 +173,7 @@ def clearlog():
                                 time.localtime()) + ']record重制完成')
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(clearlog, 'interval', seconds = 1)#间隔3秒钟执行一次
+scheduler.add_job(clearlog, 'interval', seconds = 3600 * 6)#间隔6小时执行一次
 scheduler.start()    #这里的调度任务是独立的一个线程
 
 #initialize
@@ -189,6 +189,10 @@ myself = bot.self
 @bot.register(except_self = False)
 def print_others(msg):
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
+    f = open('/home/weather/hsefz_server/wxbot/record/txtrecord.txt', 'w+')
+    f.write('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']' + str(msg))
+    f.close()  # you can omit in most cases as the destructor will call it
+    
     if msg.text == '天气' or msg.text == '气温' or msg.text == '气象':
         try:
             print('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']准备发送天气信息')
