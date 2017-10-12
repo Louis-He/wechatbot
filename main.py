@@ -135,7 +135,7 @@ def msgrref(msg):
         if msg.find(';') == -1:
             tempstr = msg[0:len(msg)]
         while tempstr.find(',') != -1:
-            tmp.append(int(tempstr[0:msg.find(',')]))
+            tmp.append(int(tempstr[0:tempstr.find(',')]))
             tempstr = tempstr[tempstr.find(',') + 1:len(tempstr)]
         tmp.append(int(tempstr[0:len(tempstr)]))
         middle.append(tmp)
@@ -158,9 +158,9 @@ def msgrref(msg):
     result += 'with leading term on col: '
     for i in range(0, len(list(rref[1]))):
         if i != len(list(rref[1])) - 1:
-            result += str(rref[1][i]) + ','
+            result += str(rref[1][i]+1) + ','
         else:
-            result += str(rref[1][i]) + '.'
+            result += str(rref[1][i]+1) + '.'
     result += '\n- 叮咚云计算v1'
     return result
 
@@ -171,6 +171,7 @@ def clearlog():
     f.close()  # you can omit in most cases as the destructor will call it
     print('[' + time.strftime("%Y-%m-%d %H:%M:%S",
                                 time.localtime()) + ']record重制完成')
+
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(clearlog, 'interval', seconds = 3600 * 6)#间隔6小时执行一次
@@ -259,4 +260,4 @@ def weather_reply(msg):
             return '[ERR100:内部错误]抱歉，调取最新天气失败'
 '''
 embed()
-#print(msgrref('1,0,1,3;2,3,4,7;-1,-3,-3,-4'))
+#print(msgrref('4,-12,4;3,-14,8;4,-11,3'))
