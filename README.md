@@ -14,7 +14,7 @@ If you need DO NOT have the libs from above, use 'pip3 install'.
 
 重要提示：有几率被微信封禁网页web端协议，但对于手机微信和电脑微信不存在影响
 
-#依赖包：
+# 依赖包：
 计算部分：sympy和numpy
 定时任务：apscheduler
 
