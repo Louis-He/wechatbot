@@ -166,7 +166,7 @@ def msgrref(msg):
 
 def clearlog():
     #clear logs every hour
-    f = open('~/hsefz_server/wxbot/record/txtrecord.txt', 'w')
+    f = open('/home/weather/hsefz_server/wxbot/record/txtrecord.txt', 'w')
     f.write('[' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ']record重新写入')  # python will convert \n to os.linesep
     f.close()  # you can omit in most cases as the destructor will call it
     return
