@@ -1,0 +1,11 @@
+{
+  "name": "wechatbot",
+  "version": "1.0.0",
+  "os": ["linux", "mac os x"],
+  "dependencies": {
+    "wxpy": "latest",
+    "sympy": "latest"
+    "numpy": "latest"
+    "apscheduler": "latest"
+  }
+}
