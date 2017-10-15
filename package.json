@@ -4,8 +4,8 @@
   "os": ["linux", "mac os x"],
   "dependencies": {
     "wxpy": "latest",
-    "sympy": "latest"
-    "numpy": "latest"
+    "sympy": "latest",
+    "numpy": "latest",
     "apscheduler": "latest"
   }
 }
